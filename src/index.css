@@ -1,0 +1,21 @@
+.header-custom {
+  margin-bottom: 2px;
+}
+
+.sidebar-custom {
+  width: 280px;
+  height: 90vh;
+  
+}
+
+.new-button-custom {
+  margin-left: 5px;
+}
+
+.extra-spaceing {
+  margin-right: 10px;
+}
+
+.root-li-spacing {
+  margin: 4px;
+}
