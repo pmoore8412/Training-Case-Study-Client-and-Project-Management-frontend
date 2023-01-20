@@ -6,7 +6,7 @@ export default function Root() {
 
     return (
         <>
-            <h1>Home</h1>
+            <h1>Client and Project Management System</h1>
         </>
     );
 }
