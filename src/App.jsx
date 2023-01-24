@@ -25,12 +25,12 @@ export default function App() {
     const [cookies, removeCookies] = useCookies()
 
     const handleUserLogout = () => {
-        removeCookies('user', {maxAge: 0})
+        removeCookies("user", {maxAge: 0})
         window.location.replace("/")
     }
 
     const handleAdminLogout = () => {
-        removeCookies('admin', {maxAge: 0})
+        removeCookies("admin", {maxAge: 0})
         window.location.replace("/")
     }
     
@@ -64,11 +64,20 @@ export default function App() {
     )
 
     let loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleLoginShow}>Login</button>
+    let pathToClientList = <button type="button" className="btn btn-light new-button-custom" disabled >Client List</button>
+    let pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" disabled >New Client</button>
+    let signUpButton = <button type="button" className="btn btn-outline-warning">Sign-up</button>
 
-    if(cookies['user']) {
+    if(cookies['user'] && cookies['user'].admin === false) {
         loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleUserLogout}>Logout</button>
-    } else if (cookies['admin']) {
+        pathToClientList = <Link to="/client/list"><button type="button" className="btn btn-light new-button-custom">Client List</button></Link>
+        pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" onClick={handleShow}>New Client</button>
+        signUpButton = <button type="button" className="btn btn-outline-warning">Update Profile</button>
+    } else if (cookies['admin'] && cookies['admin'].admin === true) {
         loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleAdminLogout}>Logout</button>
+        pathToClientList = <Link to="/client/list"><button type="button" className="btn btn-light new-button-custom">Client List</button></Link>
+        pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" onClick={handleShow}>New Client</button>
+        signUpButton = <button type="button" className="btn btn-outline-warning">Update Profile</button>
     }
 
     return <>
@@ -84,8 +93,8 @@ export default function App() {
                     {formDisplayForNewClient}
                     <p className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <Link to="/"><button type="button" className="btn btn-light new-button-custom">Home</button></Link>
-                        <Link to="/client/list"><button type="button" className="btn btn-light new-button-custom">Client List</button></Link>
-                        <button type="button" className="btn btn-light new-button-custom" onClick={handleShow}>New Client</button>
+                        {pathToClientList}
+                        {pathToNewClientForm}
                     </p>
                 </ul>
 
@@ -96,7 +105,7 @@ export default function App() {
                 <div className="text-end">
                     {formDisplayForLogin}
                     {loginButton}
-                    <button type="button" className="btn btn-outline-warning">Sign-up</button>
+                    {signUpButton}
                 </div>
             </div>
 

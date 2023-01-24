@@ -22,11 +22,11 @@ export default function loginFormHook(initialValues, loginValidation) {
                     if (response.data.admin !== true) {
                         setCookies('user', response.data, {path: "/"})
                         alert("Login was successful. Welcome " + response.data.firstName + " " + response.data.lastName)
-                        window.location.replace("/")
+                        window.location.pathname = "./"
                     } else if (response.data.admin === true) {
                         setCookies('admin', response.data, {path: "/"})
                         alert("Admin login was successful. Welcome " + response.data.firstName + " " + response.data.lastName)
-                        window.location.replace("/")
+                        window.location.pathname = "./"
                     }
                 })
                 .catch(error => {
