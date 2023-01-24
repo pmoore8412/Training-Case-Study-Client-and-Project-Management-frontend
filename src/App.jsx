@@ -8,6 +8,8 @@ import NewClientForm from "./forms/newClientForms/newClientForm";
 import { Outlet } from "react-router-dom";
 import ClientList from "./routes/clientList";
 import Project from "./routes/project";
+import LoginForm from "./forms/loginForms/loginForm";
+import { useCookies } from "react-cookie"
 
 export default function App() {
 
@@ -16,8 +18,21 @@ export default function App() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    localStorage.clear()
+    const [showLogin, setShowLogin] = useState(false)
+    const handleLoginClose = () => setShowLogin(false)
+    const handleLoginShow = () => setShowLogin(true)
 
+    const [cookies, removeCookies] = useCookies()
+
+    const handleUserLogout = () => {
+        removeCookies('user', {maxAge: 0})
+        window.location.replace("/")
+    }
+
+    const handleAdminLogout = () => {
+        removeCookies('admin', {maxAge: 0})
+        window.location.replace("/")
+    }
     
 
     let formDisplayForNewClient = (
@@ -33,6 +48,28 @@ export default function App() {
             </Modal.Footer>
         </Modal>
     ) 
+
+    let formDisplayForLogin = (
+        <Modal show={showLogin} onHide={handleLoginClose} backdrop="static">
+            <Modal.Header>
+                <Modal.Title>User Login</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <LoginForm />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleLoginClose}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    )
+
+    let loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleLoginShow}>Login</button>
+
+    if(cookies['user']) {
+        loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleUserLogout}>Logout</button>
+    } else if (cookies['admin']) {
+        loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleAdminLogout}>Logout</button>
+    }
 
     return <>
 
@@ -57,7 +94,8 @@ export default function App() {
                 </form>
 
                 <div className="text-end">
-                    <button type="button" className="btn btn-outline-light me-2">Login</button>
+                    {formDisplayForLogin}
+                    {loginButton}
                     <button type="button" className="btn btn-outline-warning">Sign-up</button>
                 </div>
             </div>

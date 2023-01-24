@@ -7,11 +7,9 @@ export default function ClientList() {
 
     const [clients, setClients] = useState([]);
 
-    localStorage.clear()
-
-    const fetchClients = () => {
-        return axios.get("http://localhost:9000/client/list-all-clients")
-            .then((response) => setClients(response.data));
+    const fetchClients = async () => {
+        const response = await axios.get("http://localhost:9000/client/list-all-clients");
+        return setClients(response.data);
     }
 
     useEffect(() => {
