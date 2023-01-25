@@ -11,11 +11,12 @@ export default function ContactUs() {
         <hr />
         <div className="container py-5">
             <form>
-                <h4>Your email:</h4>
-                <input type="email" name="yourEmail" className="form-control" style={{width: "300px"}} />
-                <br />
-                <h3>Message:</h3>
-                <textarea name="message" className="form-control" rows="6" style={{width: "800px"}} />
+                <h4>Your Email:</h4>
+                <input type="email" name="sender" id="sender" className="form-control" style={{width: "300px"}} />
+                <h4>Subject:</h4>
+                <input type="text" name="subject" id="subject" className="form-control" style={{width: "300px"}} />
+                <h4>Message:</h4>
+                <textarea name="message" id="message" className="form-control" rows="6" style={{width: "800px"}} />
                 <br />
                 <button className="btn btn-primary btn-lg">Send</button>
             </form>
