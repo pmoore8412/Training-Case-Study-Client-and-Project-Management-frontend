@@ -8,9 +8,7 @@ import newProjectFormHook from '../forms/newProjectForms/newProjectFormHook';
 import newProjectFormValidation from "../forms/newProjectForms/newProjectFormValidation"
 import updateClientHook from '../forms/updateClient/updateClientHook';
 import updateClientFormValidation from '../forms/updateClient/updateClientFormValidation';
-
-
-
+import { useCookies } from "react-cookie";
 
 export default function Client() {
 
@@ -33,6 +31,8 @@ export default function Client() {
     const handleShow = () => setShow(true);
     const handleCloseUpdate = () => setShowUpdate(false)
     const handleShowUpdate = () => setShowUpdate(true)
+
+    const [cookies] = useCookies()
     
 
     const fetchClient = async () => {
@@ -170,11 +170,17 @@ export default function Client() {
         return (showProjectList)
     }
 
+    let adminDelete = null
+
+    if(cookies['admin'] && cookies['admin'].admin === true) {
+        adminDelete = <Button variant="danger" onClick={() => removeClient()}>Delete</Button>
+    }
+
     localStorage.setItem("clientID", client.id)
 
     return <div>
         <h1>{client.clientName}</h1>
-        <p><Button variant="warning" onClick={handleShowUpdate} >Edit</Button>  <Button variant="danger" onClick={() => removeClient()}>Delete</Button></p>
+        <p><Button variant="warning" onClick={handleShowUpdate} >Edit</Button>  {adminDelete}</p>
         {formDisplayForUpdateClient}
         <h4>Point of contact: {client.clientPOC}</h4>
         <h6>Point of contact email: {client.clientPOCEmail}</h6>
