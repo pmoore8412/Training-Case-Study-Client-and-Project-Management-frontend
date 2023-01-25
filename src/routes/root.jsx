@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Modal } from "react-bootstrap";
 
 export default function Root() {
 
@@ -18,6 +18,28 @@ export default function Root() {
     useEffect(() => {
         fetchUsers();        
     }, [])
+
+    const removeUser = (userId, isAdmin) => {
+        if(isAdmin === false) {
+            return axios.delete("http://localhost:9000/users/user/remove/" + userId)
+                .then(alert("User Removed"))
+                .then(window.location.reload())
+                .catch(error => {console.log(error)})
+        } else if(isAdmin === true) {
+            return alert("Cannot remove a system admin!!! If you need an admin removed; please email a database admin to remove the system admin")
+        }
+    }
+
+    const promoteUser = (userId, isAdmin) => {
+        if(isAdmin === false) {
+            return axios.put("http://localhost:9000/users/user/admin/update/" + userId)
+                .then(alert("User has been promoted to System Admin"))
+                .then(window.location.reload())
+                .catch(error => {console.log(error)})
+        } else if(isAdmin === true) {
+            return alert("Cannot promote to System Admin. User is already a System Admin")
+        }
+    }
 
     let logedIn = (
         <div className="jumbotron">
@@ -49,8 +71,8 @@ export default function Root() {
                     <td>{userObj.firstName}</td>
                     <td>{userObj.lastName}</td>
                     <td>{userObj.email}</td>
-                    <td></td>
-                    <td><Button variant="danger">Remove User</Button></td>
+                    <td><Button variant="warning" onClick={() => promoteUser(userObj.id, userObj.admin)}>Promote</Button></td>
+                    <td><Button variant="danger" onClick={() => removeUser(userObj.id, userObj.admin)}>Remove User</Button></td>
                 </tr>
             )
         })
@@ -66,7 +88,7 @@ export default function Root() {
 
     let userTable = (<>    
         <div className="jumbotron">
-            <h1 className="display-4">Welcome Admin {localStorage.getItem("adminFirstName")} {localStorage.getItem("adminLastName")}</h1>
+            <h1 className="display-4">Welcome System Admin {localStorage.getItem("adminFirstName")} {localStorage.getItem("adminLastName")}</h1>
             <p className="lead">Admins have the power to remove any user and promote users to admin.</p>
             <p className="lead">Along with being able to create, remove, and update clients and client projects; Admins also have the sole athority to remove clients.</p>
             <p><i>Use this power wisely</i></p>
