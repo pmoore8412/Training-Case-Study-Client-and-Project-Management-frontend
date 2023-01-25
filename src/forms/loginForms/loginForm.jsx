@@ -12,10 +12,10 @@ export default function LoginForm() {
     return <>
         <form onSubmit={handleSubmit}>
             <h6>Email:</h6>
-            <input type="text" className="form-input" name="email" id="email" onChange={handleInputChange} value={inputs.email} />
+            <input type="text" className="form-control" style={{width: "300px"}} name="email" id="email" onChange={handleInputChange} value={inputs.email} />
             {error.email && <p>{error.email}</p>}
             <h6>Password:</h6>
-            <input type="password" className="form-input" name="password" id="password" onChange={handleInputChange} value={inputs.password} />
+            <input type="password" className="form-control" style={{width: "300px"}} name="password" id="password" onChange={handleInputChange} value={inputs.password} />
             {error.password && <p>{error.password}</p>}
             <hr />
             <button type="submit" className="btn btn-primary">Login</button>

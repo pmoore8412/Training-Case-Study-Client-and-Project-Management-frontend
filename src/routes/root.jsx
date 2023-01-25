@@ -42,7 +42,7 @@ export default function Root() {
     }
 
     let logedIn = (
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4"> Welcome to the Client and Project Management System</h1>
             <p className="lead">Here you can manage your clients and client projects.</p>
             <p>Please login or sign up to access the full fetures of this system.</p>
@@ -79,7 +79,7 @@ export default function Root() {
     }
 
     let userNormal = (
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4">Welcome {localStorage.getItem("userFirstName")} {localStorage.getItem("userLastName")}</h1>
             <p className="lead">As a user you are able to view clients, add clients, and update clients.</p>
             <p className="lead">You are also able to view, update, and add client projects.</p>
@@ -87,7 +87,7 @@ export default function Root() {
     )
 
     let userTable = (<>    
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4">Welcome System Admin {localStorage.getItem("adminFirstName")} {localStorage.getItem("adminLastName")}</h1>
             <p className="lead">Admins have the power to remove any user and promote users to admin.</p>
             <p className="lead">Along with being able to create, remove, and update clients and client projects; Admins also have the sole athority to remove clients.</p>
@@ -114,8 +114,8 @@ export default function Root() {
     </>)
 
     return (
-        <>
+        <div className="container py-4">
             {adminView()}
-        </>
+        </div>
     );
 }

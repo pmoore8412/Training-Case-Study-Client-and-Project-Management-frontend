@@ -10,6 +10,7 @@ import ClientList from "./routes/clientList";
 import Project from "./routes/project";
 import LoginForm from "./forms/loginForms/loginForm";
 import NewUserForm from "./forms/signUpForms/newUserSignUpForm";
+import ContactUs from "./routes/contactUs";
 
 export default function App() {
 
@@ -111,6 +112,7 @@ export default function App() {
                         <Link to="/"><button type="button" className="btn btn-light new-button-custom">Home</button></Link>
                         {pathToClientList}
                         {pathToNewClientForm}
+                        <Link to="/contact-us" ><button type="button" className="btn btn-light new-button-custom">Contact Us</button></Link>
                     </p>
                 </ul>
 
@@ -136,6 +138,7 @@ export default function App() {
             <Route path="/client/:clientId" element={<Client />} />
             <Route path="/client/list" element={<ClientList />} />
             <Route path="/project/:projectId" element={<Project />} />
+            <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
     </>
 }

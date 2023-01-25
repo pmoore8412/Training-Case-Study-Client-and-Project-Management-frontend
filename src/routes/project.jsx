@@ -43,14 +43,14 @@ export default function Project() {
             <Modal.Body>
                 <form onSubmit={handleProjectSubmit}>
                     <h6>Project Lead:</h6>
-                    <input type="text" name="projectLead" id="projectLead" className="form-input" onChange={handleProjectInputChange} value={projectInputs.projectLead} />
+                    <input type="text" name="projectLead" id="projectLead" className="form-control" style={{width: "300px"}} onChange={handleProjectInputChange} value={projectInputs.projectLead} />
                     {error.projectLead && <p>{error.projectLead}</p>}
                     <h6>Project Lead Email:</h6>
-                    <input type="email" name="projectLeadEmail" id="projectLeadEmail" className="form-input" 
+                    <input type="email" name="projectLeadEmail" id="projectLeadEmail" className="form-control" style={{width: "300px"}}
                         onChange={handleProjectInputChange} value={projectInputs.projectLeadEmail} />
                     {error.projectLeadEmail && <p>{error.projectLeadEmail}</p>}
                     <h6>Project Description:</h6>
-                    <textarea name="projectDescription" id="projectDescription" className="form-input" 
+                    <textarea name="projectDescription" id="projectDescription" className="form-control" rows="4" cols="50"
                         onChange={handleProjectInputChange} value={projectInputs.projectDescription} />
                     {error.projectDescription && <p>{error.projectDescription}</p>}
                     <hr />
@@ -80,7 +80,7 @@ export default function Project() {
         </>
     } else {
         loginCheck = (
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4">Unauthorized Access</h1>
             <p className="lead">You do not have the permissions to access this page</p>
             <p>Please create an account or login to access this page</p>
@@ -90,8 +90,8 @@ export default function Project() {
     localStorage.setItem("clientID", project.clientId)
     localStorage.setItem("projectID", project.id)
 
-    return <>
+    return <div className="container py-4">
         {loginCheck}
-    </>
+    </div>
 
 }

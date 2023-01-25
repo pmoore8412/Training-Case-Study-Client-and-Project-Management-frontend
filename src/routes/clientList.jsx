@@ -36,15 +36,15 @@ export default function ClientList() {
         </>
     } else {
         loginCheck = (
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4">Unauthorized Access</h1>
             <p className="lead">You do not have the permissions to access this page</p>
             <p>Please create an account or login to access this page</p>
         </div>)
     }
 
-    return <>
+    return <div className="container py-4">
         {loginCheck}
-    </>
+    </div>
 
 }

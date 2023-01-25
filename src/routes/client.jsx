@@ -78,10 +78,10 @@ export default function Client() {
             <Modal.Body>
                 <form onSubmit={handleSubmit} >
                     <h6>Point of Contact</h6>
-                    <input type="text" name="clientPOC" id="clientPOC" className="form-input" onChange={handleInputChange} value={inputs.clientPOC} />
+                    <input type="text" name="clientPOC" id="clientPOC" className="form-control" style={{width: "300px"}} onChange={handleInputChange} value={inputs.clientPOC} />
                     {clientError.clientPOC && <p>{clientError.clientPOC}</p>}
                     <h6>Point of Contact Email</h6>
-                    <input type="email" name="clientPOCEmail" id="clientPOCEmail" className="form-input" onChange={handleInputChange} value={inputs.clientPOCEmail} />
+                    <input type="email" name="clientPOCEmail" id="clientPOCEmail" className="form-control" style={{width: "300px"}} onChange={handleInputChange} value={inputs.clientPOCEmail} />
                     {clientError.clientPOCEmail && <p>{clientError.clientPOCEmail}</p>}
                     <hr />
                     <button type="submit" className="btn btn-primary">Update Client</button>
@@ -101,19 +101,19 @@ export default function Client() {
             <Modal.Body>
                 <form onSubmit={handleProjectSubmit}>
                     <h6>Project ID</h6>
-                    <input type="text" name="id" id="id" className="form-input" onChange={handleProjectInputChange} value={projectInputs.id}/>
+                    <input type="text" name="id" id="id" className="form-control" style={{width: "100px"}} onChange={handleProjectInputChange} value={projectInputs.id}/>
                     {error.id && <p>{error.id}</p>}
                     <h6>Projecct Name:</h6>
-                    <input type="text" name="projectName" id="projectName" className="form-input" onChange={handleProjectInputChange} value={projectInputs.projectName} />
+                    <input type="text" name="projectName" id="projectName" className="form-control" style={{width: "300px"}} onChange={handleProjectInputChange} value={projectInputs.projectName} />
                     {error.projectName && <p>{error.projectName}</p>}
                     <h6>Project Lead:</h6>
-                    <input type="text" name="projectLead" id="projectLead" className="form-input" onChange={handleProjectInputChange} value={projectInputs.projectLead} />
+                    <input type="text" name="projectLead" id="projectLead" className="form-control" style={{width: "300px"}} onChange={handleProjectInputChange} value={projectInputs.projectLead} />
                     {error.projectLead && <p>{error.projectLead}</p>}
                     <h6>Project Lead Email:</h6>
-                    <input type="email" name="projectLeadEmail" id="projectLeadEmail" className="form-input" onChange={handleProjectInputChange} value={projectInputs.projectLeadEmail} />
+                    <input type="email" name="projectLeadEmail" id="projectLeadEmail" className="form-control" style={{width: "300px"}} onChange={handleProjectInputChange} value={projectInputs.projectLeadEmail} />
                     {error.projectLeadEmail && <p>{error.projectLeadEmail}</p>}
                     <h6>Project Description:</h6>
-                    <textarea name="projectDescription" id="projectDescription" className="form-input" onChange={handleProjectInputChange} value={projectInputs.projectDescription} />
+                    <textarea name="projectDescription" id="projectDescription" className="form-control" rows="4" onChange={handleProjectInputChange} value={projectInputs.projectDescription} />
                     {error.projectDescription && <p>{error.projectDescription}</p>}
                     <input type="hidden" name="clientId" id="clientId" value={clientId} />
                     <hr />
@@ -192,7 +192,7 @@ export default function Client() {
             </div>)
     } else {
         loginCheck = (
-        <div className="jumbotron">
+        <div className="h-100 p-5 text-bg-dark rounded-3">
             <h1 className="display-4">Unauthorized Access</h1>
             <p className="lead">You do not have the permissions to access this page</p>
             <p>Please create an account or login to access this page</p>
@@ -201,9 +201,9 @@ export default function Client() {
 
     localStorage.setItem("clientID", client.id)
 
-    return <>
+    return <div className="container py-4">
         {loginCheck}
-    </>
+    </div>
 
 
 }
