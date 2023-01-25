@@ -8,7 +8,6 @@ import newProjectFormHook from '../forms/newProjectForms/newProjectFormHook';
 import newProjectFormValidation from "../forms/newProjectForms/newProjectFormValidation"
 import updateClientHook from '../forms/updateClient/updateClientHook';
 import updateClientFormValidation from '../forms/updateClient/updateClientFormValidation';
-import { useCookies } from "react-cookie";
 
 export default function Client() {
 
@@ -31,10 +30,7 @@ export default function Client() {
     const handleShow = () => setShow(true);
     const handleCloseUpdate = () => setShowUpdate(false)
     const handleShowUpdate = () => setShowUpdate(true)
-
-    const [cookies] = useCookies()
     
-
     const fetchClient = async () => {
         return axios.get("http://localhost:9000/client/" + clientId)
             .then((response) => setClient(response.data))
@@ -172,26 +168,42 @@ export default function Client() {
 
     let adminDelete = null
 
-    if(cookies['admin'] && cookies['admin'].admin === true) {
+    let loginCheck = null
+
+    if(localStorage.getItem("admin")) {
         adminDelete = <Button variant="danger" onClick={() => removeClient()}>Delete</Button>
+    }
+
+    if(localStorage.getItem("admin") || localStorage.getItem("user")) {
+        loginCheck = (
+            <div>
+                <h1>{client.clientName}</h1>
+                <p><Button variant="warning" onClick={handleShowUpdate} >Edit</Button>  {adminDelete}</p>
+                {formDisplayForUpdateClient}
+                <h4>Point of contact: {client.clientPOC}</h4>
+                <h6>Point of contact email: {client.clientPOCEmail}</h6>
+                <p>Client Details: {client.clientDescription}</p>
+                {formDisplayForNewProject}
+                <Button variant="primary" onClick={handleShow}>New Project</Button>
+                <br />
+                <h3>Projects:</h3>
+                <br />
+                {showTable()}
+            </div>)
+    } else {
+        loginCheck = (
+        <div className="jumbotron">
+            <h1 className="display-4">Unauthorized Access</h1>
+            <p className="lead">You do not have the permissions to access this page</p>
+            <p>Please create an account or login to access this page</p>
+        </div>)
     }
 
     localStorage.setItem("clientID", client.id)
 
-    return <div>
-        <h1>{client.clientName}</h1>
-        <p><Button variant="warning" onClick={handleShowUpdate} >Edit</Button>  {adminDelete}</p>
-        {formDisplayForUpdateClient}
-        <h4>Point of contact: {client.clientPOC}</h4>
-        <h6>Point of contact email: {client.clientPOCEmail}</h6>
-        <p>Client Details: {client.clientDescription}</p>
-        {formDisplayForNewProject}
-        <Button variant="primary" onClick={handleShow}>New Project</Button>
-        <br />
-        <h3>Projects:</h3>
-        <br />
-        {showTable()}
-    </div>
+    return <>
+        {loginCheck}
+    </>
 
 
 }

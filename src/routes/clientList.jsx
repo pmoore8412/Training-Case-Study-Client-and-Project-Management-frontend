@@ -25,11 +25,26 @@ export default function ClientList() {
         })
     }
 
+    let loginCheck = null
+
+    if(localStorage.getItem("admin") || localStorage.getItem("user")) {
+        loginCheck = <>
+            <h1>Client List</h1>
+            <ul className="nav nav-pills flex-column mb-auto">
+                {showClientList()}
+            </ul>
+        </>
+    } else {
+        loginCheck = (
+        <div className="jumbotron">
+            <h1 className="display-4">Unauthorized Access</h1>
+            <p className="lead">You do not have the permissions to access this page</p>
+            <p>Please create an account or login to access this page</p>
+        </div>)
+    }
+
     return <>
-        <h1>Client List</h1>
-        <ul className="nav nav-pills flex-column mb-auto">
-            {showClientList()}
-        </ul>
+        {loginCheck}
     </>
 
 }

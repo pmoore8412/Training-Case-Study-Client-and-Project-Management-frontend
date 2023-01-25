@@ -67,16 +67,31 @@ export default function Project() {
         fetchProject();
     }, [])
 
+    let loginCheck = null
+
+    if(localStorage.getItem("admin") || localStorage.getItem("user")) {
+        loginCheck = <>
+            <h1>Project: {project.projectName}</h1>
+            <p><Button variant="warning" onClick={handleShow}>Edit</Button>  <Button variant="danger" onClick={() => {deleteProject()}}>Delete</Button></p>
+            <h4>Project Lead: {project.projectLead}</h4>
+            <h6>Lead's Email: {project.projectLeadEmail}</h6>
+            <p>Project Details: {project.projectDescription}</p>
+            {updateProjectForm()}
+        </>
+    } else {
+        loginCheck = (
+        <div className="jumbotron">
+            <h1 className="display-4">Unauthorized Access</h1>
+            <p className="lead">You do not have the permissions to access this page</p>
+            <p>Please create an account or login to access this page</p>
+        </div>)
+    }
+
     localStorage.setItem("clientID", project.clientId)
     localStorage.setItem("projectID", project.id)
 
     return <>
-        <h1>Project: {project.projectName}</h1>
-        <p><Button variant="warning" onClick={handleShow}>Edit</Button>  <Button variant="danger" onClick={() => {deleteProject()}}>Delete</Button></p>
-        <h4>Project Lead: {project.projectLead}</h4>
-        <h6>Lead's Email: {project.projectLeadEmail}</h6>
-        <p>Project Details: {project.projectDescription}</p>
-        {updateProjectForm()}
+        {loginCheck}
     </>
 
 }

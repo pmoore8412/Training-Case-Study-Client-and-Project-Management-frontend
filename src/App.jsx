@@ -9,7 +9,6 @@ import { Outlet } from "react-router-dom";
 import ClientList from "./routes/clientList";
 import Project from "./routes/project";
 import LoginForm from "./forms/loginForms/loginForm";
-import { useCookies } from "react-cookie"
 import NewUserForm from "./forms/signUpForms/newUserSignUpForm";
 
 export default function App() {
@@ -27,15 +26,13 @@ export default function App() {
     const handleSignUpClose = () => setShowSignUp(false)
     const handleSignUpShow = () => setShowSignUp(true)
 
-    const [cookies, removeCookies] = useCookies()
-
     const handleUserLogout = () => {
-        removeCookies("user", {maxAge: 0})
+        localStorage.clear()
         window.location.replace("/")
     }
 
     const handleAdminLogout = () => {
-        removeCookies("admin", {maxAge: 0})
+        localStorage.clear()
         window.location.replace("/")
     }
     
@@ -87,12 +84,12 @@ export default function App() {
     let pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" disabled >New Client</button>
     let signUpButton = <button type="button" className="btn btn-outline-warning" onClick={handleSignUpShow}>Sign-up</button>
 
-    if(cookies['user'] && cookies['user'].admin === false) {
+    if(localStorage.getItem("user")) {
         loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleUserLogout}>Logout</button>
         pathToClientList = <Link to="/client/list"><button type="button" className="btn btn-light new-button-custom">Client List</button></Link>
         pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" onClick={handleShow}>New Client</button>
         signUpButton = <button type="button" className="btn btn-outline-warning">Update Profile</button>
-    } else if (cookies['admin'] && cookies['admin'].admin === true) {
+    } else if (localStorage.getItem("admin")) {
         loginButton = <button type="button" className="btn btn-outline-light me-2" onClick={handleAdminLogout}>Logout</button>
         pathToClientList = <Link to="/client/list"><button type="button" className="btn btn-light new-button-custom">Client List</button></Link>
         pathToNewClientForm = <button type="button" className="btn btn-light new-button-custom" onClick={handleShow}>New Client</button>

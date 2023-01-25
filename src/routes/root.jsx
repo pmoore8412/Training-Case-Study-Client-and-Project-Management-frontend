@@ -1,12 +1,9 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { Table, Button } from "react-bootstrap";
 
 export default function Root() {
-
-    const [cookies] = useCookies()
 
     const [users, setUsers] = useState([])
 
@@ -31,13 +28,13 @@ export default function Root() {
     )
 
     const adminView = () => {
-        if(cookies['admin'] && cookies['admin'].admin === true) {
+        if(localStorage.getItem("admin")) {
             if(users.length === 0) {
                 return <p>No users avalible</p>
             } else {
                 return (userTable)
             }
-        } else if (cookies['user'] && cookies['user'].admin === false) {
+        } else if (localStorage.getItem("user")) {
             return (userNormal)
         } else {
             return (logedIn)
@@ -61,7 +58,7 @@ export default function Root() {
 
     let userNormal = (
         <div className="jumbotron">
-            <h1 className="display-4">Welcome {cookies['user'].firstName} {cookies['user'].lastName}</h1>
+            <h1 className="display-4">Welcome {localStorage.getItem("userFirstName")} {localStorage.getItem("userLastName")}</h1>
             <p className="lead">As a user you are able to view clients, add clients, and update clients.</p>
             <p className="lead">You are also able to view, update, and add client projects.</p>
         </div>
@@ -69,7 +66,7 @@ export default function Root() {
 
     let userTable = (<>    
         <div className="jumbotron">
-            <h1 className="display-4">Welcome Admin {cookies['admin'].firstName} {cookies['admin'].lastName}</h1>
+            <h1 className="display-4">Welcome Admin {localStorage.getItem("adminFirstName")} {localStorage.getItem("adminLastName")}</h1>
             <p className="lead">Admins have the power to remove any user and promote users to admin.</p>
             <p className="lead">Along with being able to create, remove, and update clients and client projects; Admins also have the sole athority to remove clients.</p>
             <p><i>Use this power wisely</i></p>

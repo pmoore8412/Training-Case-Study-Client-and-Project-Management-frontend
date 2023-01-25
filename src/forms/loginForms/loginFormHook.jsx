@@ -1,12 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import { useCookies } from "react-cookie";
 
 export default function loginFormHook(initialValues, loginValidation) {
 
     const [inputs, setInputs] = useState(initialValues)
     const [errors, setErrors] = useState({})
-    const [cookies, setCookies] = useCookies()
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -20,11 +18,15 @@ export default function loginFormHook(initialValues, loginValidation) {
             axios.post("http://localhost:9000/users/user/login", null, { headers: { email, password} })
                 .then(response => {
                     if (response.data.admin !== true) {
-                        setCookies('user', response.data, {path: "/"})
+                        localStorage.setItem("user", response.data.admin)
+                        localStorage.setItem("userFirstName", response.data.firstName)
+                        localStorage.setItem("userLastName", response.data.lastName)
                         alert("Login was successful. Welcome " + response.data.firstName + " " + response.data.lastName)
                         window.location.pathname = "./"
                     } else if (response.data.admin === true) {
-                        setCookies('admin', response.data, {path: "/"})
+                        localStorage.setItem("admin", response.data.admin)
+                        localStorage.setItem("adminFirstName", response.data.firstName)
+                        localStorage.setItem("adminLastName", response.data.lastName)
                         alert("Admin login was successful. Welcome " + response.data.firstName + " " + response.data.lastName)
                         window.location.pathname = "./"
                     }
